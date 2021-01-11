@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-VMware虚拟机CentOS7磁盘扩容" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/01/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BACentOS7%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/" class="article-date">
+  <time class="dt-published" datetime="2021-01-11T07:30:40.000Z" itemprop="datePublished">2021-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/01/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BACentOS7%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/">VMware虚拟机CentOS7磁盘扩容</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="查看分区"><a href="#查看分区" class="headerlink" title="查看分区"></a>查看分区</h3><p>1.查看<code>df -h</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd &#x2F;</span><br><span class="line">[root@localhost &#x2F;]# df -h</span><br><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs                 899M     0  899M    0% &#x2F;dev</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                    910M  9.5M  901M    2% &#x2F;run</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root   17G   17G  1.6M  100% &#x2F;</span><br><span class="line">&#x2F;dev&#x2F;sda1               1014M  194M  821M   20% &#x2F;boot</span><br><span class="line">tmpfs                    182M     0  182M    0% &#x2F;run&#x2F;user&#x2F;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="虚拟机硬盘扩展"><a href="#虚拟机硬盘扩展" class="headerlink" title="虚拟机硬盘扩展"></a>虚拟机硬盘扩展</h3><p> 先进入虚拟机设置里增大磁盘空间</p>
+<p>1.VMware中关闭CentOS</p>
+<p>2.打开VMware CentOS设置</p>
+<p>3.到硬盘(SCSI)选项中-磁盘实用工具-扩展</p>
+<p>4.扩展完成，重新开启CentOS</p>
+<h3 id="CentOS7磁盘扩容"><a href="#CentOS7磁盘扩容" class="headerlink" title="CentOS7磁盘扩容"></a>CentOS7磁盘扩容</h3><p>1.查看<code>fdisk -l</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost lib]# sudo fdisk -l</span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;sda：48.3 GB, 48318382080 字节，94371840 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000dffc7</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">&#x2F;dev&#x2F;sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">&#x2F;dev&#x2F;sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;mapper&#x2F;centos-root：18.2 GB, 18249416704 字节，35643392 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;mapper&#x2F;centos-swap：2147 MB, 2147483648 字节，4194304 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>2.接下来增加一个分区<code>fdisk /dev/sda</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost lib]# fdisk &#x2F;dev&#x2F;sda</span><br><span class="line"></span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：m</span><br><span class="line">命令操作</span><br><span class="line">   a   toggle a bootable flag</span><br><span class="line">   b   edit bsd disklabel</span><br><span class="line">   c   toggle the dos compatibility flag</span><br><span class="line">   d   delete a partition</span><br><span class="line">   g   create a new empty GPT partition table</span><br><span class="line">   G   create an IRIX (SGI) partition table</span><br><span class="line">   l   list known partition types</span><br><span class="line">   m   print this menu</span><br><span class="line">   n   add a new partition</span><br><span class="line">   o   create a new empty DOS partition table</span><br><span class="line">   p   print the partition table</span><br><span class="line">   q   quit without saving changes</span><br><span class="line">   s   create a new empty Sun disklabel</span><br><span class="line">   t   change a partition&#39;s system id</span><br><span class="line">   u   change display&#x2F;entry units</span><br><span class="line">   v   verify the partition table</span><br><span class="line">   w   write table to disk and exit</span><br><span class="line">   x   extra functionality (experts only)</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (2 primary, 0 extended, 2 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">分区号 (3,4，默认 3)：3</span><br><span class="line">起始 扇区 (41943040-94371839，默认为 41943040)：</span><br><span class="line">将使用默认值 41943040</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (41943040-94371839，默认为 94371839)：</span><br><span class="line">将使用默认值 94371839</span><br><span class="line">分区 3 已设置为 Linux 类型，大小设为 25 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意：“起始扇区”那里直接回车，随便乱写容易造成空间浪费</p>
+<p>现在系统就有3个分：sda1,sda2,sda3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# fdisk -l</span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;sda：48.3 GB, 48318382080 字节，94371840 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000dffc7</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">&#x2F;dev&#x2F;sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">&#x2F;dev&#x2F;sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line">&#x2F;dev&#x2F;sda3        41943040    94371839    26214400   83  Linux</span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;mapper&#x2F;centos-root：18.2 GB, 18249416704 字节，35643392 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">磁盘 &#x2F;dev&#x2F;mapper&#x2F;centos-swap：2147 MB, 2147483648 字节，4194304 个扇区</span><br><span class="line">Units &#x3D; 扇区 of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">扇区大小(逻辑&#x2F;物理)：512 字节 &#x2F; 512 字节</span><br><span class="line">I&#x2F;O 大小(最小&#x2F;最佳)：512 字节 &#x2F; 512 字节</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="创建物理卷"><a href="#创建物理卷" class="headerlink" title="创建物理卷"></a>创建物理卷</h3><p>1.命令：<code>pvcreate /dev/sda3</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost lib]# pvcreate &#x2F;dev&#x2F;sda3</span><br><span class="line">Device &#x2F;dev&#x2F;sda3 not found.</span><br></pre></td></tr></table></figure>
+<p>2.重启后再：<code>pvcreate /dev/sda3</code>提示成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# pvcreate &#x2F;dev&#x2F;sda3</span><br><span class="line">Physical volume &quot;&#x2F;dev&#x2F;sda3&quot; successfully created.</span><br></pre></td></tr></table></figure>
+<p>3.使用<code>vgscan</code>查询物理卷,可以查到本机物理卷名称为<code>centos</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# vgscan</span><br><span class="line">  Reading volume groups from cache.</span><br><span class="line">  Found volume group &quot;centos&quot; using metadata type lvm2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>4.使用新增物理卷扩展<code>centos</code>命令：<code>vgextend centos  /dev/sda3</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# vgextend centos  &#x2F;dev&#x2F;sda3</span><br><span class="line">  Volume group &quot;centos&quot; successfully extended</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>5.命令<code>lvextend -L +24G /dev/mapper/centos-root</code>:使用<code>lvextend</code>命令为逻辑卷<code>/dev/mapper/centos-root</code>增加24G空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# lvextend -L +24G &#x2F;dev&#x2F;mapper&#x2F;centos-root</span><br><span class="line">  Size of logical volume centos&#x2F;root changed from &lt;17.00 GiB (4351 extents) to &lt;41.00 GiB (10495 extents).</span><br><span class="line">  Logical volume centos&#x2F;root successfully resized.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>6.命令<code>df -h</code>发现实际容量并没有变化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# df -h</span><br><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs                 899M     0  899M    0% &#x2F;dev</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                    910M  9.5M  901M    2% &#x2F;run</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root   17G   17G  1.6M  100% &#x2F;</span><br><span class="line">&#x2F;dev&#x2F;sda1               1014M  194M  821M   20% &#x2F;boot</span><br><span class="line">tmpfs                    182M     0  182M    0% &#x2F;run&#x2F;user&#x2F;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>因为我们的系统还不认识刚刚添加进来的磁盘的文件系统，所以还需要对文件系统进行扩容</p>
+<p>xfs_growfs  加上要扩展的分区名</p>
+<p>或者</p>
+<p>resize2fs – f 加 上要扩展的分区名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# xfs_growfs  &#x2F;dev&#x2F;mapper&#x2F;centos-root</span><br><span class="line">meta-data&#x3D;&#x2F;dev&#x2F;mapper&#x2F;centos-root isize&#x3D;512    agcount&#x3D;4, agsize&#x3D;1113856 blks</span><br><span class="line">         &#x3D;                       sectsz&#x3D;512   attr&#x3D;2, projid32bit&#x3D;1</span><br><span class="line">         &#x3D;                       crc&#x3D;1        finobt&#x3D;0 spinodes&#x3D;0</span><br><span class="line">data     &#x3D;                       bsize&#x3D;4096   blocks&#x3D;4455424, imaxpct&#x3D;25</span><br><span class="line">         &#x3D;                       sunit&#x3D;0      swidth&#x3D;0 blks</span><br><span class="line">naming   &#x3D;version 2              bsize&#x3D;4096   ascii-ci&#x3D;0 ftype&#x3D;1</span><br><span class="line">log      &#x3D;internal               bsize&#x3D;4096   blocks&#x3D;2560, version&#x3D;2</span><br><span class="line">         &#x3D;                       sectsz&#x3D;512   sunit&#x3D;0 blks, lazy-count&#x3D;1</span><br><span class="line">realtime &#x3D;none                   extsz&#x3D;4096   blocks&#x3D;0, rtextents&#x3D;0</span><br><span class="line">data blocks changed from 4455424 to 10746880</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>7..命令<code>df -h</code>,由17G扩展为41G</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost &#x2F;]# df -h</span><br><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs                 899M     0  899M    0% &#x2F;dev</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;dev&#x2F;shm</span><br><span class="line">tmpfs                    910M  9.5M  901M    2% &#x2F;run</span><br><span class="line">tmpfs                    910M     0  910M    0% &#x2F;sys&#x2F;fs&#x2F;cgroup</span><br><span class="line">&#x2F;dev&#x2F;mapper&#x2F;centos-root   41G   17G   25G   42% &#x2F;</span><br><span class="line">&#x2F;dev&#x2F;sda1               1014M  194M  821M   20% &#x2F;boot</span><br><span class="line">tmpfs                    182M     0  182M    0% &#x2F;run&#x2F;user&#x2F;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/01/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BACentOS7%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/" data-id="ckjs99ub90000mwpm2ymbcpfb" data-title="VMware虚拟机CentOS7磁盘扩容" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/01/11/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2021-01-11T07:27:26.223Z" itemprop="datePublished">2021-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/01/11/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/01/11/hello-world/" data-id="ckjs8vjd900009opm8a9gc3zo" data-title="Hello World" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/01/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BACentOS7%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/">VMware虚拟机CentOS7磁盘扩容</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/11/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
